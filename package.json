@@ -1,0 +1,36 @@
+{
+  "name": "docker-clean-cli",
+  "version": "1.0.0",
+  "description": "Zero-dependency interactive Docker container, image, volume, and build cache cleaner with disk space reclamation.",
+  "main": "src/core/index.js",
+  "bin": {
+    "dockerclean": "./bin/docker-clean-cli.js",
+    "docker-clean": "./bin/docker-clean-cli.js"
+  },
+  "scripts": {
+    "test": "node --test test/*.test.js",
+    "start": "node bin/docker-clean-cli.js ui",
+    "df": "node bin/docker-clean-cli.js df"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/mahdyarmonfared/docker-clean-cli.git"
+  },
+  "keywords": [
+    "docker",
+    "docker-clean",
+    "prune",
+    "disk-space",
+    "containers",
+    "dangling-images",
+    "volumes",
+    "cli",
+    "devops",
+    "developer-tools"
+  ],
+  "author": "Mahdyar Monfared",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

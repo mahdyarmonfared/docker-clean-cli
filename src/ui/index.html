@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>DockerClean Studio — Disk Space Reclamation & Asset Cleaner</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+</head>
+<body>
+  <div class="app-container">
+    <!-- Header -->
+    <header class="app-header">
+      <div class="brand">
+        <div class="brand-logo">🐳</div>
+        <div class="brand-text">
+          <h1>DockerClean <span class="badge version">v1.0.0</span></h1>
+          <p class="subtitle" id="daemonStatusText">Checking Docker Daemon...</p>
+        </div>
+      </div>
+      
+      <div class="header-actions">
+        <div class="space-gauge">
+          <span class="gauge-label">Reclaimable Space</span>
+          <span class="gauge-val" id="gaugeTotal">0 B</span>
+        </div>
+        <button class="btn btn-secondary" id="btnRefresh">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21.5 2v6h-6M2.5 22v-6h6M2 11.5a10 10 0 0 1 18.8-4.3M22 12.5a10 10 0 0 1-18.8 4.2"/></svg>
+          Refresh DF
+        </button>
+        <button class="btn btn-primary" id="btnPruneSelected">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 6h18M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/></svg>
+          Reclaim Selected Space
+        </button>
+      </div>
+    </header>
+
+    <!-- Stat Metric Cards -->
+    <section class="stats-grid">
+      <div class="stat-card" id="cardContainers">
+        <span class="stat-title">Stopped Containers</span>
+        <span class="stat-value" id="statContainers">0</span>
+        <span class="stat-sub" id="subContainers">0 B reclaimable</span>
+      </div>
+      <div class="stat-card stat-warning" id="cardImages">
+        <span class="stat-title">Dangling / Unused Images</span>
+        <span class="stat-value" id="statImages">0</span>
+        <span class="stat-sub" id="subImages">0 B reclaimable</span>
+      </div>
+      <div class="stat-card stat-brand" id="cardVolumes">
+        <span class="stat-title">Unused Volume Mounts</span>
+        <span class="stat-value" id="statVolumes">0</span>
+        <span class="stat-sub" id="subVolumes">0 B reclaimable</span>
+      </div>
+      <div class="stat-card stat-success" id="cardCache">
+        <span class="stat-title">Build Cache Size</span>
+        <span class="stat-value" id="statCache">0 B</span>
+        <span class="stat-sub" id="subCache">Reclaimable build layers</span>
+      </div>
+    </section>
+
+    <!-- Category Tabs -->
+    <div class="tabs-bar">
+      <div class="tabs-nav">
+        <button class="tab-btn active" data-tab="containers">Containers</button>
+        <button class="tab-btn" data-tab="images">Images</button>
+        <button class="tab-btn" data-tab="volumes">Volumes</button>
+        <button class="tab-btn" data-tab="cache">Build Cache</button>
+      </div>
+
+      <div class="tabs-actions">
+        <label class="checkbox-label">
+          <input type="checkbox" id="selectAllCheckbox"> Select All Dangling Items
+        </label>
+      </div>
+    </div>
+
+    <!-- Table Container -->
+    <div class="table-container">
+      <table class="assets-table">
+        <thead id="tableHead">
+          <!-- Dynamic headers -->
+        </thead>
+        <tbody id="tableBody">
+          <tr>
+            <td colspan="6" class="loading-cell">Inspecting Docker disk usage...</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Footer -->
+    <footer class="app-footer">
+      <div>DockerClean-CLI &bull; Zero External Dependencies &bull; Running on Node.js</div>
+      <div class="footer-links">
+        <a href="https://github.com/mahdyarmonfared/docker-clean-cli" target="_blank" rel="noopener">GitHub Repository</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Toast Notification -->
+  <div id="toast" class="toast"></div>
+
+  <script src="app.js"></script>
+</body>
+</html>
